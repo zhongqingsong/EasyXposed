@@ -18,7 +18,7 @@ import static com.zqstudio.easyxposed.utils.Tool.showStack;
  * 		实际上，本项目相当于有 三层 hook。第一层来hook所有的应用，第二层过滤出真正的应用，第三层开始hook。
  * 	第一层：就是Loader。在过滤掉大部分的应用后，让少部分的应用进入第二层hook。
  * 	第二层：本类的handleLoad，根据实际的要被hook的应用，过滤出真正要被hook的应用。
- * 	第三层：即 gameHook，真正意义上的应用被hook的具体逻辑。
+ * 	第三层：即 appHook，真正意义上的应用被hook的具体逻辑。
  */
 public final class EasyHooker implements IXposedHookLoadPackage {
 	@Override
@@ -32,10 +32,10 @@ public final class EasyHooker implements IXposedHookLoadPackage {
 
 		Tool.classLoader = lpparam.classLoader;
 		myLog("Hook Version = 9.7");
-		gameHook();
+		appHook();
 	}
 
-	private void gameHook(){
+	private void appHook(){
 		hookAllMethod("com.ironsource.sdk.controller.IronSourceWebView$JSInterface",
 				"onAdWindowsClosed", new XC_MethodHook() {
 					@Override

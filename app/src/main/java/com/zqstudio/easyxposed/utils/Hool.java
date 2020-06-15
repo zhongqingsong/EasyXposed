@@ -10,7 +10,8 @@ import static com.zqstudio.easyxposed.utils.Tool.clazzForName;
  * CreateDate：2020/6/12 9:35
  * author：ShiYong.Z
  * version：1.0
- * Description：
+ * Description：	封装的一些常用的方法，免去了一些重复的代码。
+ *
  */
 public final class Hool {
 

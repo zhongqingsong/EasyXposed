@@ -8,7 +8,11 @@ import de.robv.android.xposed.XC_MethodHook;
  * CreateDate：2020/6/12 9:31
  * author：ShiYong.Z
  * version：1.0
- * Description：
+ * Description：	常用的工具类。
+ * 	1、获取类：传入类名即可。
+ * 	2、输出堆栈：可以辅助分析。
+ * 	3、打印所有的的参数。
+ * 	4、自动打印日志：根据字符串长度，自动分配日志输出。
  */
 public final class Tool {
 
@@ -16,7 +20,7 @@ public final class Tool {
 
 	public static ClassLoader classLoader = null;
 
-	public static Class<?> clazzForName(String strClazz){
+	static Class<?> clazzForName(String strClazz){
 		Class<?> result = null;
 		try {
 			result = Class.forName(strClazz, false, classLoader);
@@ -42,9 +46,9 @@ public final class Tool {
 		Log.i(TAG, str.toString());
 	}
 
-	public static void outputProductData(String str){
+	public static void outputMsg(String str){
 		int len = str.length();
-		int nFileLength = 512 * 7;  // 3k大小，还有前面的一些其他的数据会占用一部分空间
+		int nFileLength = 512 * 7;
 		if (len > nFileLength){
 			myLog("Long Data = " + len);
 			println(str);

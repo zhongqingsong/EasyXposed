@@ -25,9 +25,16 @@ import static com.zqstudio.easyxposed.utils.Tool.myLog;
  * CreateDate：2020/6/12 9:27
  * author：ShiYong.Z
  * version：1.0
- * Description：
+ * Description： 本模块是结合Xposed进行了一定的改造，使之成为一个完整的可以直接使用的多功能的简易框架。
+ * 		同时，尽可能的考虑到了效率问题。
  */
 public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygoteInit {
+	/*
+		配置信息：一旦修改，必须重启手机
+		1、想要debug的应用：因为debug需要在init时操作，所以每次修改都需要重启手机
+		2、模块名：本项目最后生成的模块的名称，即包名。一般不用改。
+		3、真正的hook的类：即真正的hook代码所在的类，可以修改。
+	 */
 	private final String toDebugApp, moduleName, realHookClass;
 	public XposedLoder() {
 		toDebugApp = "test.abc";
@@ -37,12 +44,12 @@ public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygo
 
 	@Override
 	public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) {
-		// 排除系统应用
+		// 排除系统应用：先过滤掉系统的应用
 		if (lpparam.appInfo == null || (lpparam.appInfo.flags
 				& (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) == 1) {
 			return;
 		}
-		// 过滤指定的包名：增删改查后需要重启（新框架待确认）
+		// 过滤指定的包名：常见的谷歌和Android相关的包名
 		if (Tool.appFilter(lpparam.packageName)){
 			return;
 		}

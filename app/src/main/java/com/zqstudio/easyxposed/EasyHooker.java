@@ -6,7 +6,8 @@ import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-import static com.zqstudio.easyxposed.utils.Hool.hookAllMethod;
+import static com.zqstudio.easyxposed.utils.Hool.hookMethod;
+import static com.zqstudio.easyxposed.utils.Tool.clazzForName;
 import static com.zqstudio.easyxposed.utils.Tool.myLog;
 import static com.zqstudio.easyxposed.utils.Tool.showStack;
 
@@ -14,13 +15,21 @@ import static com.zqstudio.easyxposed.utils.Tool.showStack;
  * CreateDate：2020/6/12 9:30
  * author：ShiYong.Z
  * version：1.0
- * Description： 模块真正意义上的hook代码所在。
- * 		实际上，本项目相当于有 三层 hook。第一层来hook所有的应用，第二层过滤出真正的应用，第三层开始hook。
- * 	第一层：就是Loader。在过滤掉大部分的应用后，让少部分的应用进入第二层hook。
- * 	第二层：本类的handleLoad，根据实际的要被hook的应用，过滤出真正要被hook的应用。
- * 	第三层：即 appHook，真正意义上的应用被hook的具体逻辑。
+ * Description： 模块真正意义上的hook代码所在。采用了三层结构，这三个层次保证了免重启。
+ *
+ * 	第一层：XposedLoder。	主要作用，作为模块使用，对所有的应用生效。
+ * 			次要作用，如果所有应用都hook，效率极低。所以这里就会过滤掉大部分的应用，让少部分的应用进入第二层。
+ * 	第二层：本类的handleLoadPackage。	从初选应用中，过滤出真正要被hook的应用。
+ * 			因为第二层已经不属于模块的初始hook了，属于模块的hook逻辑。所以，模块本身和Xposed的联系没变，实现了免重启。
+ * 	第三层：方法appHook。			真正意义上的hook逻辑，这里也是我们需要对应用进行实际操作的地方。
  */
+
 public final class EasyHooker implements IXposedHookLoadPackage {
+
+	/**********************************************
+		！！！   本类的任何修改，都支持免重启	！！！
+	 **********************************************/
+
 	@Override
 	public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
 
@@ -30,14 +39,16 @@ public final class EasyHooker implements IXposedHookLoadPackage {
 			return;
 		}
 
+		// 开启第三层
 		Tool.classLoader = lpparam.classLoader;
 		myLog("Hook Version = 9.7");
 		appHook();
 	}
 
 	private void appHook(){
-		hookAllMethod("com.ironsource.sdk.controller.IronSourceWebView$JSInterface",
-				"onAdWindowsClosed", new XC_MethodHook() {
+		Class test = clazzForName("test.a.b.c");
+		hookMethod("com.ironsource.sdk.controller.IronSourceWebView$JSInterface",
+				"onAdWindowsClosed", test, new XC_MethodHook() {
 					@Override
 					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 						super.beforeHookedMethod(param);

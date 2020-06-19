@@ -20,12 +20,12 @@ public final class Tool {
 
 	public static ClassLoader classLoader = null;
 
-	static Class<?> clazzForName(String strClazz){
+	public static Class<?> clazzForName(String strClazz){
 		Class<?> result = null;
 		try {
 			result = Class.forName(strClazz, false, classLoader);
 		} catch (ClassNotFoundException e) {
-			myLog("ClassNotFoundException = " + strClazz);
+			myException(e);
 		}
 		return result;
 	}
@@ -33,15 +33,17 @@ public final class Tool {
 	public static void showStack(){
 		Log.e(TAG, Log.getStackTraceString(new Throwable()));
 	}
-
 	public static void myLog(String msg){
 		Log.w(TAG, msg);
+	}
+	public static void myException(Exception e){
+		Log.e(TAG, e.toString());
 	}
 
 	public static void showAllParams(XC_MethodHook.MethodHookParam param){
 		StringBuilder str = new StringBuilder();
 		for (int i = 0, len = param.args.length; i < len; ++i){
-			str.append(" | ").append(param.args[i]);
+			str.append(param.args[i]).append("\t|\t");
 		}
 		Log.i(TAG, str.toString());
 	}

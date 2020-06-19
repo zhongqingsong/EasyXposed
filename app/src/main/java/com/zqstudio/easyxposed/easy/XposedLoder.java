@@ -19,7 +19,6 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-import static com.zqstudio.easyxposed.utils.Tool.myLog;
 
 /**
  * CreateDate：2020/6/12 9:27
@@ -31,9 +30,9 @@ import static com.zqstudio.easyxposed.utils.Tool.myLog;
 public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygoteInit {
 	/*
 		配置信息：一旦修改，必须重启手机
-		1、想要debug的应用：因为debug需要在init时操作，所以每次修改都需要重启手机
-		2、模块名：本项目最后生成的模块的名称，即包名。一般不用改。
-		3、真正的hook的类：即真正的hook代码所在的类，可以修改。
+		1、想要debug的应用：	因为debug需要在init时操作，所以每次修改都需要重启手机
+		2、模块名：			本项目最后生成的模块的名称，即包名。
+		3、真正的hook的类：	真正的hook代码所在的类。
 	 */
 	private final String toDebugApp, moduleName, realHookClass;
 	public XposedLoder() {
@@ -44,19 +43,20 @@ public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygo
 
 	@Override
 	public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) {
-		// 排除系统应用：先过滤掉系统的应用
+		// 排除系统应用
 		if (lpparam.appInfo == null || (lpparam.appInfo.flags
 				& (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) == 1) {
 			return;
 		}
-		// 过滤指定的包名：常见的谷歌和Android相关的包名
+		// 过滤常见包名
 		if (Tool.appFilter(lpparam.packageName)){
 			return;
 		}
 
 		/*
+			开启第一层：
 			将xposed的classloader替换为Application的classloader：
-			解决宿主程序存在多个.dex文件时，有时候ClassNotFound的问题
+			解决宿主程序存在多个 dex 文件时，可能发生 ClassNotFound 的问题。
 		 */
 		XposedHelpers.findAndHookMethod(Application.class, "attach", Context.class, new XC_MethodHook() {
 			@Override
@@ -69,20 +69,20 @@ public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygo
 	}
 
 	/**
-	 * 安装app以后，系统会在/data/app/下备份了一份.apk文件，通过动态加载这个apk文件，调用相应的方法
-	 * 这样就可以实现，只需要第一次重启，以后修改hook代码就不用重启了
-	 *
-	 * @param context           context参数
-	 * @param loadPackageParam  传入XC_LoadPackage.LoadPackageParam参数
-	 * @throws Throwable 		抛出各种异常
+	 * 		安装app以后，系统会在 /data/app/ 下备份.apk文件。动态加载这个apk文件，然后得到里面的逻辑。
 	 */
 	private void invokeHandleHookMethod(Context context,
 										XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
+		// 先动态加载模块的apk
 		File apkFile = findApkFile(context);
 		if (apkFile == null) {
-			throw new RuntimeException("模块APK失败");
+			return;
 		}
-		//加载指定的hook逻辑处理类，并调用它的handleHook方法
+
+		/*
+			开启第二层：
+		 	加载apk中的hook处理类，并反射调用它的handleLoadPackage。
+		 */
 		PathClassLoader pathClassLoader = new PathClassLoader(apkFile.getAbsolutePath(), ClassLoader.getSystemClassLoader());
 		Class<?> cls = Class.forName(realHookClass, true, pathClassLoader);
 		Object instance = cls.newInstance();
@@ -90,9 +90,7 @@ public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygo
 		method.invoke(instance, loadPackageParam);
 	}
 
-	/**
-	 * 根据包名构建目标Context,并调用getPackageCodePath()来定位apk
-	 */
+	// 根据包名，手动构建Context，然后调用getPackageCodePath()来定位apk
 	private File findApkFile(Context context) {
 		try {
 			Context moudleContext = context.createPackageContext(moduleName,
@@ -100,13 +98,13 @@ public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygo
 			String apkPath = moudleContext.getPackageCodePath();
 			return new File(apkPath);
 		} catch (Exception e) {
-			myLog("findApkFile " + e);
+			Tool.myException(e);
 		}
 		return null;
 	}
 
 	/*
-		在每个线程启动时，就直接修改参数。完成应用的debug修改
+		在每个进程启动时，就直接修改进程的启动参数，完成应用的debug修改
 		xref: /frameworks/base/core/java/android/os/Process.java
 	*/
 	@Override
@@ -130,9 +128,9 @@ public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygo
 				}
 				param.args[id] = flags;
 				if (BuildConfig.DEBUG) {
-					myLog(strName + " can debug now !");
+					Tool.myLog(strName + " can debug now !");
 				}else{
-					myLog(strName + " change fail .");
+					Tool.myLog(strName + " change fail .");
 				}
 			}
 		});

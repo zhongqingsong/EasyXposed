@@ -26,6 +26,11 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
  * version：1.0
  * Description： 本模块是结合Xposed进行了一定的改造，使之成为一个完整的可以直接使用的多功能的简易框架。
  * 		同时，尽可能的考虑到了效率问题。
+ *
+ *
+ ********************************************************
+ *	   本类的任何修改，必须重启。其他的所以地方，修改才免重启	*
+ ********************************************************
  */
 public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygoteInit {
 	/*

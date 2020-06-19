@@ -26,10 +26,6 @@ import static com.zqstudio.easyxposed.utils.Tool.showStack;
 
 public final class EasyHooker implements IXposedHookLoadPackage {
 
-	/**********************************************
-		！！！   本类的任何修改，都支持免重启	！！！
-	 **********************************************/
-
 	@Override
 	public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
 

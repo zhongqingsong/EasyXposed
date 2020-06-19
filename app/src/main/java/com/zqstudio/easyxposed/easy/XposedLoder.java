@@ -36,7 +36,7 @@ public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygo
 	 */
 	private final String toDebugApp, moduleName, realHookClass;
 	public XposedLoder() {
-		toDebugApp = "test.abc";
+		toDebugApp = "com.want.debug.app";
 		moduleName = "com.zqstudio.easyxposed";
 		realHookClass = EasyHooker.class.getName();
 	}

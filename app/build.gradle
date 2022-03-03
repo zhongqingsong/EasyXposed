@@ -20,8 +20,7 @@ android {
 }
 
 dependencies {
-    implementation files('libs/api-82.jar')
-    implementation files('libs/api-82-sources.jar')
+    compileOnly files('lib/XposedBridgeAPI-89.jar')
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'

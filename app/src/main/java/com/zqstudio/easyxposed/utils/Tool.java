@@ -16,14 +16,14 @@ import de.robv.android.xposed.XC_MethodHook;
  */
 public final class Tool {
 
-	private static String TAG = "zqsLog";
+	private static final String TAG = "zqsLog";
 
 	public static ClassLoader classLoader = null;
 
-	public static Class<?> clazzForName(String strClazz){
+	public static Class<?> clazzForName(String clazzName){
 		Class<?> result = null;
 		try {
-			result = Class.forName(strClazz, false, classLoader);
+			result = Class.forName(clazzName, false, classLoader);
 		} catch (ClassNotFoundException e) {
 			myException(e);
 		}
@@ -74,7 +74,7 @@ public final class Tool {
 		String buf;
 		int start = 0, end, nSize = 3096, len = longMsg.length();
 		while (start < len) {
-			end = (start + nSize) < len ? start + nSize : len;
+			end = Math.min((start + nSize), len);
 			buf = longMsg.substring(start, end);
 			start += nSize;
 			Log.d(TAG, buf);

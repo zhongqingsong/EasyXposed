@@ -16,7 +16,7 @@ https://blog.csdn.net/qq_40194392/article/details/83013443
 ## 使用指南  
 1、编写代码  
 上述的准备工作完成后，直接进入 EasyHooker 类，然后根据实际需求，编写代码即可！  
-- 填写需要hook的包名（为了方便，目前只支持单个应用的hook）  
+- 填写需要hook的包名  
 - 编写对应的hook，然后Run，就可以实现hook啦。不再需要什么重启操作！！！  
 
 2、常用类  
@@ -25,6 +25,18 @@ https://blog.csdn.net/qq_40194392/article/details/83013443
 - Tool：包括日志、超长日志、堆栈，以及参数信息等输出。以及最重要的获取class的封装方式。  
 - Hool：封装好的一些hook的方法，目前支持整个类、单个方法、构造的简单化hook。如果有其他需求，可以自行添加，或者提Feature。  
 
-## 提示  
+## 常见错误
+1、如果发现hook失效了，大部分原因都是xposed模块加载异常。可以尝试卸载模块，以及在Installer中调整尝试模块。然后尝试多次重启手机等方式。  
+本模块一旦成功过一次后，理论上就可以模块免重启了。  
+2、项目运行不起来，大概率是gradle构建失败了。可以自行百度具体的原因。  
+3、如果是Gradle安装失败，那么大概率就需要手动进行本地安装了：  
+访问Gradle的官网（https://gradle.org/releases），下载对应的gradle版本；  
+找到并进入以下路径 C:\Users\用户名\.gradle\wrapper\dists\gradle-用户自己的本地版本-all\一组字符串\  
+进入后，会发现可能有类似 gradle-6.5.1-all.zip.lck 之类的文件，之后将下载好的gradle的文件复制到上面的文件夹中（如果已经有东西了，就全部删掉）  
+重启AndroidStudio，并重新打开项目，进行build。  
+
+## 温馨提示  
+0、为了方便，目前只支持单个应用的hook。如果需要切换hook其他应用，直接修改EasyHooker里的包名，然后run，hook即可立即生效。  
 1、本项目只是集成了xposed内容，仍然需要手机拥有ROOT权限、以及XposedInstaller等内容。  
-2、有任何的建议，期待你们的反馈。  
+2、有任何的建议、问题，请提Issues。  
+

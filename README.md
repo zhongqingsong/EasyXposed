@@ -30,13 +30,13 @@ https://blog.csdn.net/qq_40194392/article/details/83013443
 本模块一旦成功过一次后，理论上就可以模块免重启了。  
 2、项目运行不起来，大概率是gradle构建失败了。可以自行百度具体的原因。  
 3、如果是Gradle安装失败，那么大概率就需要手动进行本地安装了：  
-访问Gradle的官网（https://gradle.org/releases），下载对应的gradle版本；  
-找到并进入以下路径 C:\Users\用户名\.gradle\wrapper\dists\gradle-用户自己的本地版本-all\一组字符串\  
-进入后，会发现可能有类似 gradle-6.5.1-all.zip.lck 之类的文件，之后将下载好的gradle的文件复制到上面的文件夹中（如果已经有东西了，就全部删掉）  
-重启AndroidStudio，并重新打开项目，进行build。  
+  访问Gradle的官网，然后下载对应的gradle版本 https://gradle.org/releases  
+  找到并进入以下路径 "C:\Users\用户名\.gradle\wrapper\dists\gradle-用户自己的本地版本-all\一组字符串\"  
+  进入后，会发现可能有类似 gradle-6.5.1-all.zip.lck 之类的文件，之后将下载好的gradle的文件复制到上面的文件夹中（如果已经有东西了，就全部删掉）  
+  重启AndroidStudio，并重新打开项目，进行build。  
 
 ## 温馨提示  
-0、为了方便，目前只支持单个应用的hook。如果需要切换hook其他应用，直接修改EasyHooker里的包名，然后run，hook即可立即生效。  
+0、为了方便，目前只支持单个应用的hook。如果需要切换hook其他应用，直接修改EasyHooker里的包名，然后run，hook即可立即生效，无需再次重启。  
 1、本项目只是集成了xposed内容，仍然需要手机拥有ROOT权限、以及XposedInstaller等内容。  
 2、有任何的建议、问题，请提Issues。  
 

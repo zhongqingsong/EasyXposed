@@ -16,7 +16,13 @@ import static com.zqstudio.easyxposed.utils.Tool.myException;
  */
 public final class Hool {
 
-	public static void hookAllMethod(String clazzName, String methodName, XC_MethodHook xcMethodHook){
+	/**
+	 * hook指定类的所有同名方法，方便处理方法重载。
+	 * @param clazzName		类名
+	 * @param methodName	方法名
+	 * @param xcMethodHook	替换的方法
+	 */
+	public static void hookSameMethod(String clazzName, String methodName, XC_MethodHook xcMethodHook){
 		Class clazz = clazzForName(clazzName);
 		try{
 			XposedBridge.hookAllMethods(clazz, methodName, xcMethodHook);
@@ -25,6 +31,11 @@ public final class Hool {
 		}
 	}
 
+	/**
+	 * hook指定类的构造方法
+	 * @param clazzName	类名
+	 * @param params	对应的构造方法的参数
+	 */
 	public static void hookConstructor(String clazzName, Object... params){
 		Class clazz = clazzForName(clazzName);
 		try{
@@ -34,6 +45,12 @@ public final class Hool {
 		}
 	}
 
+	/**
+	 * hook指定的方法
+	 * @param clazzName		类名
+	 * @param methodName	方法名
+	 * @param params		方法的参数，以及对应的替换方法
+	 */
 	public static void hookMethod(String clazzName, String methodName, Object... params){
 		Class clazz = clazzForName(clazzName);
 		try{

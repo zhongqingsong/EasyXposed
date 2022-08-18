@@ -11,31 +11,13 @@ import static com.zqstudio.easyxposed.utils.Tool.clazzForName;
 import static com.zqstudio.easyxposed.utils.Tool.myLog;
 import static com.zqstudio.easyxposed.utils.Tool.showStack;
 
-/**
- * CreateDate：2020/6/12 9:30
- * author：ShiYong.Z
- * version：1.0
- * Description： 模块真正意义上的hook代码所在。采用了三层结构，这三个层次保证了免重启。
- *
- * 	第一层：XposedLoder。	主要作用，作为模块使用，对所有的应用生效。
- * 			次要作用，如果所有应用都hook，效率极低。所以这里就会过滤掉大部分的应用，让少部分的应用进入第二层。
- * 	第二层：本类的handleLoadPackage。	从初选应用中，过滤出真正要被hook的应用。
- * 			因为第二层已经不属于模块的初始hook了，属于模块的hook逻辑。所以，模块本身和Xposed的联系没变，实现了免重启。
- * 	第三层：方法appHook。			真正意义上的hook逻辑，这里也是我们需要对应用进行实际操作的地方。
- */
 
 public final class EasyHooker implements IXposedHookLoadPackage {
 
 	@Override
 	public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
+		// WARN：去LSP中确认，实际要被hook的应用包名
 
-		// TODO 实际要被hook的应用包名
-		String strApp = "com.test.app";
-		if (!strApp.equals(lpparam.packageName)){
-			return;
-		}
-
-		// 开启第三层
 		Tool.classLoader = lpparam.classLoader;
 		myLog("Hook Version = 0.1");
 		appHook();

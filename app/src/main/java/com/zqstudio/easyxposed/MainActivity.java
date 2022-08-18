@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 
 		// 修改主页提示语
-		String msg = "EasyXposed 帮你免重启了，\n开始你的 HOOK 吧！";
+		String msg = "EasyLSP已启用，点击关闭。\n并手动选择生效应用。\n开始你的 HOOK 吧！";
 		TextView textView = findViewById(R.id.tips);
 		textView.setText(msg);
 	}

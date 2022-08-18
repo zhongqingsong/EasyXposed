@@ -25,7 +25,7 @@
         <!-- 模块描述 -->
         <meta-data
             android:name="xposeddescription"
-            android:value="开源的易用xposed，包含一些常用的简易功能。" />
+            android:value="开源的易用xposed，包含一些常用的简易功能。方便同好自行开发Xposed模块。" />
         <!-- xposed版本号 -->
         <meta-data
             android:name="xposedminversion"

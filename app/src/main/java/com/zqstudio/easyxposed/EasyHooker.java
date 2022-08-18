@@ -30,14 +30,14 @@ public final class EasyHooker implements IXposedHookLoadPackage {
 	public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
 
 		// TODO 实际要被hook的应用包名
-		String strApp = "com.tellurionmobile.realmcraft";
+		String strApp = "com.test.app";
 		if (!strApp.equals(lpparam.packageName)){
 			return;
 		}
 
 		// 开启第三层
 		Tool.classLoader = lpparam.classLoader;
-		myLog("Hook Version = 9.7");
+		myLog("Hook Version = 0.1");
 		appHook();
 	}
 

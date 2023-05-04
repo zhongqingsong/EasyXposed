@@ -2,72 +2,119 @@ package com.zqstudio.easyxposed.utils;
 
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook;
-
 /**
  * CreateDate：2020/6/12 9:31
  * author：ShiYong.Z
- * version：1.0
+ * version：1.1
  * Description：	常用的工具类。
- * 	1、获取类：传入类名即可。
- * 	2、输出堆栈：可以辅助分析。
- * 	3、打印所有的的参数。
- * 	4、自动打印日志：根据字符串长度，自动分配日志输出。
  */
 public final class Tool {
 
-	private static final String TAG = "zqsLog";
+	private static final String TAG = "zqLog";
+	private static final String[] arrContain = {"com.google", "com.android"};
 
-	public static ClassLoader classLoader = null;
+	private static ClassLoader classLoader;
 
+
+	// 核心块
+	/**
+	 * 保存游戏的classloader
+	 * @param loader 实例
+	 * @return true，成功获取
+	 */
+	public static boolean saveClassloader(ClassLoader loader){
+		boolean result = false;
+		if (loader != null){
+			classLoader = loader;
+			result = true;
+		}
+		return result;
+	}
+
+	/**
+	 * 通过字符串获取类
+	 * @param clazzName 完整的类名
+	 * @return 类
+	 */
 	public static Class<?> clazzForName(String clazzName){
 		Class<?> result = null;
 		try {
 			result = Class.forName(clazzName, false, classLoader);
 		} catch (ClassNotFoundException e) {
-			myException(e);
+			showException(e);
 		}
 		return result;
 	}
 
-	public static void showStack(){
-		Log.e(TAG, Log.getStackTraceString(new Throwable()));
-	}
-	public static void myLog(String msg){
-		Log.w(TAG, msg);
-	}
-	public static void myException(Exception e){
-		Log.e(TAG, e.toString());
-	}
-
-	public static void showAllParams(XC_MethodHook.MethodHookParam param){
-		StringBuilder str = new StringBuilder();
-		for (int i = 0, len = param.args.length; i < len; ++i){
-			str.append(param.args[i]).append("\t|\t");
-		}
-		Log.i(TAG, str.toString());
-	}
-
-	public static void outputMsg(String str){
-		int len = str.length();
-		int nFileLength = 512 * 7;
-		if (len > nFileLength){
-			myLog("Long Data = " + len);
-			println(str);
-		}else{
-			myLog(str);
-		}
-	}
-
-	public static boolean appFilter(String strName){
-		// 需要过滤的进程名
-		String[] strContain = {"com.google", "com.android"};
-		for (String str : strContain){
-			if (strName.startsWith(str)){
+	/**
+	 * 过滤进程名：可自行添加要过滤的包名前部分
+	 * @param pkgName 应用包名
+	 * @return true，被过滤
+	 */
+	public static boolean appFilter(String pkgName){
+		for (String str : arrContain){
+			if (pkgName.startsWith(str)){
 				return true;
 			}
 		}
 		return false;
+	}
+
+
+	// 日志块
+
+	/**
+	 * 普通日志
+	 * @param msg 标准的日志输出
+	 */
+	public static void showLog(String msg){
+		Log.w(TAG, msg);
+	}
+
+	/**
+	 * 打印调用本方法时的堆栈
+	 */
+	public static void showStack(){
+		Log.e(TAG, Log.getStackTraceString(new Throwable()));
+	}
+
+	/**
+	 * 打印异常信息
+	 * @param e 异常
+	 */
+	public static void showException(Exception e){
+		Log.e(TAG, e.toString());
+	}
+
+	/**
+	 * 输出任意长数据（String的极限长度）
+	 * @param str 大型字符串
+	 */
+	public static void showMessage(String str){
+		int len = str.length();
+		int nFileLength = 512 * 7;
+		if (len > nFileLength){
+			showLog("Long Data Size = " + len);
+			println(str);
+		}else{
+			showLog(str);
+		}
+	}
+
+	/**
+	 * 打印方法的所有的参数名及其数据
+	 * @param args XC_MethodHook.MethodHookParam#args
+	 * @return 参数列表
+	 */
+	public static String parseArgs(Object[] args){
+		String result = "";
+		if (args == null) return result;
+		StringBuilder str = new StringBuilder();
+		for (Object obj : args){
+			str.append(obj.toString()).append("   ");
+		}
+		result = str.toString().trim();
+		return result;
 	}
 
 	private static void println(String longMsg){

@@ -24,8 +24,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
  * CreateDate：2020/6/12 9:27
  * author：ShiYong.Z
  * version：1.0
- * Description： 本模块是结合Xposed进行了一定的改造，使之成为一个完整的可以直接使用的多功能的简易框架。
- * 		同时，尽可能的考虑到了效率问题。
+ * Description： 本模块是结合Xposed进行了一定的改造，使之成为一个完
+ * 整的可以直接使用的多功能的简易框架。同时，尽可能的考虑到了效率问题。
  *
  *
  ********************************************************
@@ -103,7 +103,7 @@ public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygo
 			String apkPath = moudleContext.getPackageCodePath();
 			return new File(apkPath);
 		} catch (Exception e) {
-			Tool.myException(e);
+			Tool.showException(e);
 		}
 		return null;
 	}
@@ -133,9 +133,9 @@ public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygo
 				}
 				param.args[id] = flags;
 				if (BuildConfig.DEBUG) {
-					Tool.myLog(strName + " can debug now !");
+					Tool.showLog(strName + " can debug now !");
 				}else{
-					Tool.myLog(strName + " change fail .");
+					Tool.showLog(strName + " change fail .");
 				}
 			}
 		});

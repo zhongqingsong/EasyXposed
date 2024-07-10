@@ -1,7 +1,9 @@
 package com.zqstudio.easyxposed;
 
 import com.zqstudio.easyxposed.utils.Tool;
-
+import android.content.ContentResolver;
+import android.location.LocationManager;
+import android.provider.Settings;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;

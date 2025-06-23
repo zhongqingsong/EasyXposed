@@ -1,17 +1,17 @@
 # EasyXposed
 本项目只是用来方便编写Xposed的模块的一个项目模板，简单点说，就是一个提前准备好了所有的内容的Xposed项目模板。  
 使用本模板后，clone项目，然后就可以编写自己的Xposed代码啦！省去了每次写Xposed模块，都要来回折腾Xposed环境的这些问题！！  
-因此，我们仍然需要Xposed的配套环境。
+因此，我们仍然需要Xposed的配套环境。欢迎大家star项目，可以方便生成不同的xposed项目。
 
 # 特色
-项目已转变为模板，让你拥有自己的专属的xposed项目。纯爱战士狂喜。
+项目已转变为模板，让你拥有自己的专属的Xposed项目。纯爱战士狂喜。
 1. 项目已集成Xposed的jar包，省去了因年代久远，找不到合适的jar的苦恼。
 2. 添加了一些常用的功能：如应用免重启、免debug修改等，以及各种常用的hook方法。
 3. 再也不用去纠结什么 ClassLoader 了，hook什么的全都使用字符串即可完成，简单高效！！
 4. 一些常用的hook相关的功能的封装，最大程度上的减少了代码量。
 
 # 快速上手
-1. 确认自己的是哪个版本的xposed：是普通的xposed，还是LSPXposed。
+1. 确认自己的是哪个版本的xposed：是普通xposed，还是LSPXposed。
 2. 然后选择对应的分支进行：master=Xposed，LSP=LSPXposed。
 3. 点击绿色的 **Use this template**，选择 **Create a new repository**。
 4. 填写好自己的这个xposed项目的项目名，最后点击 **Create repository from template**。  
@@ -39,12 +39,13 @@
 
 # 使用指南
 1. Clone项目  
-根据自己的xposde框架，选择对应的分支，Create repository from template，接着clone自己的项目。
+根据自己的Xposed框架，选择对应的分支，Create repository from template，接着clone自己的项目。
 2. 编写代码  
-上述的准备工作完成后，直接进入 EasyHooker 类，然后根据实际需求，编写代码即可！
-- 填写需要hook的应用的包名
-- 编写对应的hook逻辑
-- 开始Run，就可以hook啦。不再需要什么重启操作！！！
+上述的准备工作完成后，直接进入 EasyHooker 类，然后根据实际功能逻辑，编写需求hook代码即可！
+3. 运行应用
+- 普通版Xposed：填写需要hook的应用的包名，然后直接run。
+- LSP版Xposed：运行起来后，去弹出的管理框里勾选自己想要hook的应用，然后直接run。
+- 成功Run起来后，就可以随意改写hook代码了，不再需要什么重启操作！！！
 
 ## 常见错误
 1. 如果发现hook失效了，大部分原因都是xposed模块加载异常。可以尝试卸载、重新安装模块，或去Installer调整模块。  
@@ -58,7 +59,7 @@
 
 ## 提示说明
 0. 为了方便，目前所有的分支只支持单个应用的hook。  
-如果需要切换hook其他应用，直接修改EasyHooker里的包名，然后run，hook即可立即生效，无需重启手机。
+如果需要切换hook其他应用，普通版直接修改EasyHooker里的包；LSP版，手动去勾选自己想要hook的应用。然后run代码，hook即可立即生效，无需重启手机。
 2. 本项目只是集成了xposed内容，仍然需要手机拥有ROOT权限以及XposedInstaller等内容。
 3. 常用类  
 一些提前封装好的类，方便进行代码的编写。

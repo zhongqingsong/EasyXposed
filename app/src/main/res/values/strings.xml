@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">EasyXposed</string>
-    <string name="easy_tip">EasyXposed 帮你免重启了，\n开始你的 HOOK 吧！\n\n点击任意位置，关闭本App</string>
+    <string name="easy_tip1">EasyXposed 帮你免重启了！\n开始你的 hook之旅 吧！！！</string>
+    <string name="easy_tip2">点击任意位置，关闭本App</string>
 </resources>

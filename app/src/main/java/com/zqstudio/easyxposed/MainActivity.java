@@ -17,8 +17,7 @@ public class MainActivity extends AppCompatActivity {
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		if (ev.getAction() == MotionEvent.ACTION_UP){
 			android.os.Process.killProcess(android.os.Process.myPid());
-		}else{
-			System.exit(0);
+			finish();
 		}
 		return super.dispatchTouchEvent(ev);
 	}

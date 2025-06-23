@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
-import com.zqstudio.easyxposed.BuildConfig;
 import com.zqstudio.easyxposed.EasyHooker;
 import com.zqstudio.easyxposed.utils.Tool;
 
@@ -132,11 +131,6 @@ public final class XposedLoder implements IXposedHookLoadPackage,IXposedHookZygo
 					flags |= DEBUG_ENABLE_DEBUGGER;
 				}
 				param.args[id] = flags;
-				if (BuildConfig.DEBUG) {
-					Tool.showLog(strName + " can debug now !");
-				}else{
-					Tool.showLog(strName + " change fail .");
-				}
 			}
 		});
 	}

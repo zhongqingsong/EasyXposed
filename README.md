@@ -1,13 +1,13 @@
 # EasyXposed
 
-[简体中文](README_CN.md)||English
+[简体中文](README_CN.md) || English
 
 This project aims to simplify the development process of Xposed modules (including LSP modules). Although I have optimized the framework, it still depends on the Xposed environment. By integrating Xposed and adding practical features (such as no-reboot and no-debug modifications), the project greatly reduces the amount of code, and hook operations can be completed with just a string.
 
 Before you start, please confirm the version of Xposed and select the corresponding branch to clone. After cloning, in theory, no extra configuration is needed and it can be run directly.
 
 ## Features
-This project is designed as an Xposed template, allowing you to have your own dedicated Xposed project. A paradise for pure love warriors!
+This project is designed as an Xposed template, allowing you to have your own dedicated Xposed project.
 1. The project has integrated the complete Xposed environment, saving you from the hassle of finding suitable jars and configuring Xposed prerequisites due to outdated information.
 2. Some commonly used features have been added: such as no-reboot and no-debug modifications for applications, as well as various common hook methods.
 3. Hooks can be directly accomplished using strings, so you don't have to worry about classLoaders anymore. It's simple and efficient!!
@@ -37,8 +37,7 @@ In view of the widespread use of the LSP framework, I have adapted the project. 
 The most commonly used branch. No need to manually select applications; just modify the code to achieve no-reboot. However, after the first installation of this application, a reboot is required.
 
 ### Environment Preparation
-This module depends on the Xposed framework, and you need to complete the installation first (you can skip this step if it is already installed):
-[Xposed Installation Tutorial](<url id="d1ccd18gts4fmtqk62ng" type="url" status="parsed" title="Xposed Beginner's Guide to Installing the Xposed Framework_CSDN Blog for Honor Phone" wc="1548">https://blog.csdn.net/qq_40194392/article/details/83013443</url> )
+This module depends on the Xposed framework, and you need to complete the installation first (you can skip this step if it is already installed).
 
 ### Development Process
 1. Use AndroidStudio to clone your project locally.
@@ -58,7 +57,7 @@ After completing the preparation work, directly enter the EasyHooker class:
   - Solution: Uninstall the module and re-enable it in Installer. Restart the phone if necessary.
 2. Project fails to run
   - Cause: Gradle build failure
-  - Solution: Check the Gradle version and configuration, or refer to the [Gradle official website](https://gradle.org/releases  ) for manual installation.
+  - Solution: Check the Gradle version and configuration, or refer to the [Gradle official website](https://gradle.org/releases) for manual installation.
 
 ## Usage Tips
 1. Currently, only single-application hooking is supported. When switching target applications: For the regular version, just modify the package name in EasyHooker. For the LSP version, switch the selected application.

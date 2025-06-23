@@ -1,6 +1,6 @@
 # EasyXposed
 
-简体中文||[English](README.md)
+简体中文 || [English](README.md)
 
 本项目旨在简化 Xposed 模块（包括 LSP 模块）的开发流程。尽管我对框架进行了优化，但仍需依赖 Xposed 环境。项目通过集成 Xposed 并增设实用功能（如免重启、免 debug 修改等），大幅减少了代码量，hook 操作仅需字符串即可完成。
 

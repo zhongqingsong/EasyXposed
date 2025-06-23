@@ -10,42 +10,10 @@ import android.util.Log;
  */
 public final class Tool {
 
-	private static final String TAG = "zqLog";
+	private static final String TAG = "easyLog";
 	private static final String[] arrContain = {"com.google", "com.android"};
 
-	private static ClassLoader classLoader;
-
-
 	// 核心块
-	/**
-	 * 保存游戏的classloader
-	 * @param loader 实例
-	 * @return true，成功获取
-	 */
-	public static boolean saveClassloader(ClassLoader loader){
-		boolean result = false;
-		if (loader != null){
-			classLoader = loader;
-			result = true;
-		}
-		return result;
-	}
-
-	/**
-	 * 通过字符串获取类
-	 * @param clazzName 完整的类名
-	 * @return 类
-	 */
-	public static Class<?> clazzForName(String clazzName){
-		Class<?> result = null;
-		try {
-			result = Class.forName(clazzName, false, classLoader);
-		} catch (ClassNotFoundException e) {
-			showException(e);
-		}
-		return result;
-	}
-
 	/**
 	 * 过滤进程名：可自行添加要过滤的包名前部分
 	 * @param pkgName 应用包名
@@ -87,8 +55,8 @@ public final class Tool {
 	}
 
 	/**
-	 * 输出任意长数据（String的极限长度）
-	 * @param str 大型字符串
+	 * 输出任意长的数据（日志输出存在一个极限长度）
+	 * @param str 超大型字符串
 	 */
 	public static void showMessage(String str){
 		int len = str.length();
